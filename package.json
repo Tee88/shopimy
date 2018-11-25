@@ -1,0 +1,24 @@
+{
+  "name": "shopimy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tee88/shopimy.git"
+  },
+  "author": "Taha A. Saleh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tee88/shopimy/issues"
+  },
+  "homepage": "https://github.com/Tee88/shopimy#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "mongoose": "^5.3.13",
+    "nodemon": "^1.18.6"
+  }
+}
