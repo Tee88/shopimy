@@ -1,6 +1,6 @@
 import express from 'express';
-import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
+import mongoose from 'mongoose';
 import productRoutes from './src/routes/productRoutes';
 
 const app = express();
@@ -9,10 +9,8 @@ const PORT = 3000;
 // mongoose connection
 mongoose.Promise = global.Promise;
 mongoose.connect(
-  'mongodb://localhost/SHOPIMYdb',
-  {
-    useMongoClient: true
-  }
+  'mongodb://localhost:27018/SHOPIMYdb',
+  { useNewUrlParser: true }
 );
 
 // bodyParser setup
