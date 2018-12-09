@@ -66,7 +66,7 @@ export const updateShop = (req, res) => {
 };
 
 export const deleteShop = (req, res) => {
-  Shop.remove({ _id: req.params.shopId })
+  Shop.deleteOne({ _id: req.params.shopId })
     .then(() => {
       res.status(200).json({
         message: 'Successfully deleted shop'

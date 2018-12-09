@@ -85,7 +85,7 @@ export const updateProduct = (req, res) => {
 };
 
 export const deleteProduct = (req, res) => {
-  Product.remove({ _id: req.params.productId })
+  Product.deleteOne({ _id: req.params.productId })
     .then(() => {
       res.status(200).json({
         message: 'Successfully deleted product'
