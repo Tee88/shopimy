@@ -1,7 +1,11 @@
 import mongoose from 'mongoose';
 import { productSchema } from '../models/productModel';
+import uniqueValidator from 'mongoose-unique-validator';
 
-const Product = mongoose.model('Product', productSchema);
+const Product = mongoose.model(
+  'Product',
+  productSchema.plugin(uniqueValidator)
+);
 
 export const addNewProduct = (req, res) => {
   let newProduct = new Product(req.body);
