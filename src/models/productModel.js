@@ -41,6 +41,10 @@ export const productSchema = new Schema({
     enum: ['camera', 'lense', 'drone', 'other'],
     required: "Enter product's genre : 'camera', 'lense', 'drone' or 'other'."
   },
+  shop: {
+    type: String,
+    required: 'Product must belong to an existing shop'
+  },
   createdAt: {
     type: Date,
     default: Date.now
