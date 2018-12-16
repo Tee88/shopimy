@@ -50,6 +50,7 @@ export const getProducts = (req, res) => {
 export const getProductById = (req, res) => {
   const id = mongoose.Types.ObjectId(req.params.productId);
   Product.findById(id)
+    .populate('shop')
     .then(product => {
       product
         ? res.status(200).json(product)

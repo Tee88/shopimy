@@ -44,7 +44,7 @@ export const productSchema = new Schema({
     },
     required: "Enter product's genre : 'camera', 'lense', 'drone' or 'other'."
   },
-  shopId: {
+  shop: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Shop',
     required: 'Product must belong to an existing shop.'
