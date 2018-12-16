@@ -21,7 +21,6 @@ export const addNewShop = (req, res) => {
 
 export const getShops = (req, res) => {
   Shop.find()
-    .select('_id name createdAt')
     .exec()
     .then(shops => {
       res.status(200).json(shops);
