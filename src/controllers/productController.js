@@ -12,24 +12,20 @@ const Product = mongoose.model(
 const Shop = mongoose.model('Shop', shopSchema);
 
 export const addNewProduct = (req, res) => {
-  const shopName = req.body.shop;
-  Shop.find()
-    .select('name')
-    .then(shops => {
-      const shopsNames = shops.map(shop => {
-        return shop.name;
-      });
-      if (!shopsNames.includes(shopName)) {
-        res.status(404).json({
-          message: `${shopName} not found. shop must be one of the following list [${shopsNames}]`
-        });
-      } else {
-        let newProduct = new Product(req.body);
-
-        newProduct.save().then(product => {
-          res.status(201).json(product);
+  Shop.findById(req.body.shopId)
+    .then(shop => {
+      if (!shop) {
+        return res.status(404).json({
+          message:
+            'Product must belong to an existing shop!  correct shopId required.'
         });
       }
+      let newProduct = new Product(req.body);
+      return newProduct.save();
+    })
+
+    .then(product => {
+      res.status(201).json(product);
     })
     .catch(err => {
       res.status(500).json({
@@ -40,7 +36,6 @@ export const addNewProduct = (req, res) => {
 
 export const getProducts = (req, res) => {
   Product.find()
-    .select('_id name price createdAt')
     .exec()
     .then(products => {
       res.status(200).json(products);
@@ -55,6 +50,7 @@ export const getProducts = (req, res) => {
 export const getProductById = (req, res) => {
   const id = mongoose.Types.ObjectId(req.params.productId);
   Product.findById(id)
+    .populate('shop')
     .then(product => {
       product
         ? res.status(200).json(product)

@@ -38,15 +38,22 @@ export const productSchema = new Schema({
   },
   genre: {
     type: String,
-    enum: ['camera', 'lense', 'drone', 'other'],
+    enum: {
+      values: ['camera', 'lense', 'drone', 'other'],
+      message: "Enter product's genre : 'camera', 'lense', 'drone' or 'other'!"
+    },
     required: "Enter product's genre : 'camera', 'lense', 'drone' or 'other'."
   },
   shop: {
-    type: String,
-    required: 'Product must belong to an existing shop'
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Shop',
+    required: 'Product must belong to an existing shop.'
   },
   createdAt: {
     type: Date,
     default: Date.now
+  },
+  updatedAt: {
+    type: Date
   }
 });
