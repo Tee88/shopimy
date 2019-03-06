@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import productRoutes from './src/routes/productRoutes';
 import shopRoutes from './src/routes/shopRoutes';
 import orderRoutes from './src/routes/orderRoutes';
+import lineItemRoutes from './src/routes/lineItemRoutes';
 
 const app = express();
 const PORT = 3000;
@@ -51,6 +52,8 @@ app.use((error, req, res, next) => {
 
 productRoutes(app);
 shopRoutes(app);
+orderRoutes(app);
+lineItemRoutes(app);
 
 app.get('/', (req, res) => {
   res.send(`Node and express server is running on port ${PORT}`);
