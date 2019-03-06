@@ -38,7 +38,8 @@ export const addNewProduct = (req, res) => {
 };
 
 export const getProducts = (req, res) => {
-  Product.find()
+  const filter = req.query.shopId ? { shop: req.query.shopId } : {};
+  Product.find(filter)
     .exec()
     .then(products => {
       res.status(200).json(products);
