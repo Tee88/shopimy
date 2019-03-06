@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import productRoutes from './src/routes/productRoutes';
 import shopRoutes from './src/routes/shopRoutes';
+import orderRoutes from './src/routes/orderRoutes';
 
 const app = express();
 const PORT = 3000;
