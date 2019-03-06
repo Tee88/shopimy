@@ -12,7 +12,9 @@ const Product = mongoose.model(
 const Shop = mongoose.model('Shop', shopSchema);
 
 export const addNewProduct = (req, res) => {
-  Shop.findById(req.body.shopId)
+  const shopId = req.query.shopId;
+
+  Shop.findById(shopId)
     .then(shop => {
       if (!shop) {
         return res.status(404).json({
@@ -20,6 +22,7 @@ export const addNewProduct = (req, res) => {
             'Product must belong to an existing shop!  correct shopId required.'
         });
       }
+      req.body.shop = shopId;
       let newProduct = new Product(req.body);
       return newProduct.save();
     })
