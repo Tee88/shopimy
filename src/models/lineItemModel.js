@@ -19,6 +19,15 @@ const lineItemSchema = new Schema({
   },
   updatedAt: {
     type: Date
+  },
+  quantity: {
+    type: Number,
+    required: "Enter item's qunatity",
+    min: 1
+  },
+  totalPrice: {
+    type: Number,
+    default: 0
   }
 });
 

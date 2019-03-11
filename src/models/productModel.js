@@ -11,8 +11,7 @@ export const productSchema = new Schema({
   },
   description: {
     type: String,
-    required: "Enter product's description",
-    unique: true
+    required: "Enter product's description"
   },
   price: {
     type: Number,
@@ -25,16 +24,12 @@ export const productSchema = new Schema({
   },
   salePrice: {
     type: Number,
-    min: 0
+    min: 0,
+    required: "Enter product's sale price"
   },
   inStock: {
     type: Boolean,
     default: true
-  },
-  totalSales: {
-    type: Number,
-    default: 0,
-    min: 0
   },
   genre: {
     type: String,
