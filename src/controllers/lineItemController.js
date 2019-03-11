@@ -16,6 +16,7 @@ const Product = mongoose.model('Product', productSchema);
 export const addNewLineItem = (req, res) => {
   const orderId = req.query.orderId;
   const productId = req.query.productId;
+  const quantity = req.body.quantity;
 
   Promise.all([Order.findById(orderId), Product.findById(productId)])
     .then(([order, product]) => {
@@ -27,11 +28,38 @@ export const addNewLineItem = (req, res) => {
         throw new Error('product');
       }
 
-      let newLineItem = new LineItem({ order, product });
+      if (!quantity) {
+        throw new Error('quantity');
+      }
+
+      if (!product.inStock) {
+        throw new Error('noStock');
+      }
+
+      let lineItemPrice;
+      if (product.onSale) {
+        lineItemPrice = product.salePrice * quantity;
+      } else {
+        lineItemPrice = product.price * quantity;
+      }
+      const newLineItem = new LineItem({
+        order: orderId,
+        product: productId,
+        quantity: quantity,
+        totalPrice: lineItemPrice
+      });
+
       return newLineItem.save();
     })
     .then(lineItem => {
-      res.status(201).json(lineItem);
+      const price = lineItem.totalPrice;
+      const orderUpdates = {
+        $inc: { totalPrice: price },
+        updatedAt: Date.now()
+      };
+      Order.findOneAndUpdate({ _id: orderId }, orderUpdates).then(
+        res.status(201).json(lineItem)
+      );
     })
     .catch(err => {
       switch (err.message) {
@@ -45,6 +73,15 @@ export const addNewLineItem = (req, res) => {
             message:
               'Line item must refer to an existing product!  correct productId required.'
           });
+        case 'quantity':
+          res.status(404).json({
+            message: 'Line item must have product quantity.'
+          });
+        case 'noStock':
+          res.status(409).json({
+            message: `Selected product is currently not in stock.`
+          });
+        // replace quantity validation with "yup!"
         default:
           res.status(500).json({
             error: err.message
