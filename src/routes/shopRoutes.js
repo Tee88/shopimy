@@ -6,16 +6,18 @@ import {
   deleteShop
 } from '../controllers/ShopController';
 
+import { validateBody, schemas } from './routeHelpers';
+
 const routes = app => {
   app
     .route('/shops')
     .get(getShops)
-    .post(addNewShop);
+    .post(validateBody(schemas.shopSchema), addNewShop);
 
   app
     .route('/shops/:shopId')
     .get(getShopById)
-    .put(updateShop)
+    .put(validateBody(schemas.shopSchema), updateShop)
     .delete(deleteShop);
 };
 

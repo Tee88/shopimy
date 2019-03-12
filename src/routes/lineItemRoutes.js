@@ -6,6 +6,8 @@ import {
   deleteLineItem
 } from '../controllers/lineItemController';
 
+import { validateBody, schemas } from './routeHelpers';
+
 const routes = app => {
   app
     .route('/lineItems')
@@ -14,12 +16,12 @@ const routes = app => {
       console.log(`request type: ${req.method}`);
       next();
     }, getLineItems)
-    .post(addNewLineItem);
+    .post(validateBody(schemas.lineItemSchema), addNewLineItem);
 
   app
     .route('/lineItems/:lineItemId')
     .get(getLineItemById)
-    .put(updateLineItem)
+    .put(validateBody(schemas.lineItemSchema), updateLineItem)
     .delete(deleteLineItem);
 };
 

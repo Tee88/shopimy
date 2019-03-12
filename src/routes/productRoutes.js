@@ -6,6 +6,8 @@ import {
   deleteProduct
 } from '../controllers/productController';
 
+import { validateBody, schemas } from './routeHelpers';
+
 const routes = app => {
   app
     .route('/products')
@@ -14,12 +16,12 @@ const routes = app => {
       console.log(`request type: ${req.method}`);
       next();
     }, getProducts)
-    .post(addNewProduct);
+    .post(validateBody(schemas.productSchema), addNewProduct);
 
   app
     .route('/products/:productId')
     .get(getProductById)
-    .put(updateProduct)
+    .put(validateBody(schemas.productSchema), updateProduct)
     .delete(deleteProduct);
 };
 
