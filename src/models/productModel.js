@@ -24,8 +24,7 @@ export const productSchema = new Schema({
   },
   salePrice: {
     type: Number,
-    min: 0,
-    required: "Enter product's sale price"
+    min: 0
   },
   inStock: {
     type: Boolean,
